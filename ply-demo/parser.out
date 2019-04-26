@@ -1,0 +1,93 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> expressions
+Rule 1     expressions -> NUMBER expression
+Rule 2     expression -> LETTER NUMBER
+Rule 3     expressions -> expressions SEPARATOR expressions
+
+Terminals, with rules where they appear
+
+LETTER               : 2
+NUMBER               : 1 2
+SEPARATOR            : 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+expression           : 1
+expressions          : 3 3 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . expressions
+    (1) expressions -> . NUMBER expression
+    (3) expressions -> . expressions SEPARATOR expressions
+
+    NUMBER          shift and go to state 2
+
+    expressions                    shift and go to state 1
+
+state 1
+
+    (0) S' -> expressions .
+    (3) expressions -> expressions . SEPARATOR expressions
+
+    SEPARATOR       shift and go to state 3
+
+
+state 2
+
+    (1) expressions -> NUMBER . expression
+    (2) expression -> . LETTER NUMBER
+
+    LETTER          shift and go to state 5
+
+    expression                     shift and go to state 4
+
+state 3
+
+    (3) expressions -> expressions SEPARATOR . expressions
+    (1) expressions -> . NUMBER expression
+    (3) expressions -> . expressions SEPARATOR expressions
+
+    NUMBER          shift and go to state 2
+
+    expressions                    shift and go to state 6
+
+state 4
+
+    (1) expressions -> NUMBER expression .
+
+    SEPARATOR       reduce using rule 1 (expressions -> NUMBER expression .)
+    $end            reduce using rule 1 (expressions -> NUMBER expression .)
+
+
+state 5
+
+    (2) expression -> LETTER . NUMBER
+
+    NUMBER          shift and go to state 7
+
+
+state 6
+
+    (3) expressions -> expressions SEPARATOR expressions .
+    (3) expressions -> expressions . SEPARATOR expressions
+
+    SEPARATOR       reduce using rule 3 (expressions -> expressions SEPARATOR expressions .)
+    $end            reduce using rule 3 (expressions -> expressions SEPARATOR expressions .)
+
+  ! SEPARATOR       [ shift and go to state 3 ]
+
+
+state 7
+
+    (2) expression -> LETTER NUMBER .
+
+    SEPARATOR       reduce using rule 2 (expression -> LETTER NUMBER .)
+    $end            reduce using rule 2 (expression -> LETTER NUMBER .)
+

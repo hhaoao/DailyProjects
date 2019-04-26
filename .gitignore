@@ -1,2 +1,4 @@
-ply-demo/
+*/.git/
 *~
+**/.idea/
+**/__pycache__/
